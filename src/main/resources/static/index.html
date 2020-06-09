@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Market Overview 5.1</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="https://images.evetech.net/Corporation/1441288013_64.jpg"/>
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+
+    <!-- X-Editable-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <!--link href="bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <script src="bootstrap-editable/js/bootstrap-editable.js"></script-->
+
+    <!-- Buttons-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.js"></script>
+
+    <!--link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js">
+    <link rel="shortcut icon" type="image/png" href="https://images.evetech.net/Corporation/1441288013_64.jpg"/-->
+
+
+
+    <!--link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script-->
+
+
+</head>
+<body>
+<nav aria-label="main navigation" class="navbar is-light" role="navigation">
+    <div class="navbar-brand">
+        <div class="navbar-item" >
+            <img atl="DigitalOcean" src="https://images.evetech.net/Corporation/1441288013_64.jpg"
+                 style="margin-right: 0.5em;"
+                 height="50"
+            >Market View 5.1
+        </div>
+    </div>
+</nav>
+<div class="container text-danger error"></div>
+<div class="container unauthenticated">
+    <a href="/oauth2/authorization/evesso"><img src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-large.png"/></a>
+    <!--With EveSSO: <a href="/oauth2/authorization/evesso">click here</a>-->
+</div>
+<div class="container authenticated" style="display:none">
+    Logged in as: <span id="user"></span>
+
+    <button onClick="logout()" class="btn btn-primary">Logout</button>
+
+</div>
+<p style="margin-left: 1em;">
+    <b>ADD:</b> Enter Item Name and needed amount, then press Add-Button <br>
+    <b>MODIFY:</b> Click in the "Amount quota" value and enter new value <br>
+    <b>DELETE:</b> Modify amount but keep value BLANK (0 will still be kept)<br>
+    <br>
+    <b>Background:</b><br>
+    <font color="orange">Orange</font>: Below 50%<br>
+    <font color="red">Red</font>: Below 10%
+</p>
+<form id = "newitemform">
+    <table id="newinputtable" >
+        <tr>
+            <th><label for="fname">Type ID:</label><br></th>
+            <th><label for="fname">Type name:</label><br></th>
+            <th><label for="lname">Amount wanted:</label><br></th>
+        </tr>
+        <tr>
+            <!-- _name_ is according to the x-editable syntax, for easier backend functionality-->
+            <th><input type="text" id="newid" name="pk" value="0" disabled><br></th>
+            <th><input type="text" id="newname" name="name" value="Isogen"><br></th>
+            <th><input type="text" id="newamount" name="value" value="100"><br></th>
+            <th><input type="submit" id="submitbutton" value="Add"></th>
+        </tr>
+    </table>
+</form>
+
+<div class="dropdown">
+    <button class="dropbtn">Dropdown</button>
+    <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+    </div>
+</div>
+<table id="itemtable" class="table"></table>
+
+
+    <script type="text/javascript">
+    $.get("/user", function(data) {
+        $("#user").html(data.name);
+        $(".unauthenticated").hide()
+        $(".authenticated").show()
+    });
+</script>
+    <script type="text/javascript">
+    var logout = function() {
+    $.post("/logout", function() {
+        $("#user").html('');
+        $(".unauthenticated").show();
+        $(".authenticated").hide();
+    })
+    return true;
+}
+</script>
+    <script type="text/javascript">
+    $.get("/error", function(data) {
+    if (data) {
+        $(".error").html(data);
+    } else {
+        $(".error").html('');
+    }
+});
+</script>
+<script type="text/javascript">
+$.ajaxSetup({
+    beforeSend : function(xhr, settings) {
+        if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-XSRF-TOKEN", Cookies.get('XSRF-TOKEN'));
+            }
+        }
+     }
+});
+</script>
+
+</body>
+<script>
+
+</script>
+<script>
+            // to init the datatables.net
+            var server = "localhost:5000"
+            //var server = "squirrelacademy.redirectme.net:5000"
+            $.fn.editable.defaults.mode = 'inline';
+
+            $(document).ready(function() {
+                $('#newitemform').submit( function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '/api/newOrder/1',
+                        type: 'POST',
+                        pk: 1,
+                        data: {
+                            name: $('#newname').val(),
+                            value: $('#newamount').val(),
+                            pk: $('#newid').val()
+                        },
+                        success: function(msg) {
+                            alert(msg);
+
+                        },
+                        error: function(msg) {
+                            alert(msg.responseText);
+                        }
+                    });
+                });
+                var table = $('#itemtable').DataTable(
+                    {
+                        "paging": false,
+                        //"serverside": true,
+                        "processing": true,
+                        "ajax": {
+                            //"url": "http://"+server+"/api/tabledata/1028148435908",
+                            "url": "http://"+server+"/api/tabledata/1",
+                            "dataSrc": "data",
+                            "error": handleAjaxError
+                        },
+                        createdRow:function(row,data,dataIndex, cells){
+                           //console.log(data.name);
+                           $(cells[2]).editable({
+                                placement: 'top',
+                                url: '/api/requestedItems/1',
+                                pk: data.type_id,
+                                type: 'text',
+                                name: data.name,
+
+                                title: 'title',
+                                error: function (response) {
+                                    console.log('remote error from fail');
+                                    return 'Update NOT successful, contact Julia Allrian';
+                                },
+                                success: function (response) {
+                                    console.log('success');
+                                    //return 'success';
+                                }
+
+                            });
+                            if (cells[5].innerHTML < 10) {
+                                //console.log(cells[5].innerHTML);
+                                //$(cells[5]).css('background-color', 'red');
+                                $(row).css('background-color', '#ffcccb');
+
+                            }
+                            else if (cells[5].innerHTML < 50) {
+                                //console.log(cells[5].innerHTML);
+                                $(row).css('background-color', '#fed8b1');
+                            }
+                            //$(cells[0]).style.paddin="0px";
+
+
+                        },
+
+                        "columns": [
+                            {"title": "Type ID", "data": "type_id", "render": function(data, type, row){
+                                return data+'  <img atl="DigitalOcean" src="https://images.evetech.net/types/'+data+'/icon" height="20">';
+
+                                }},
+                            {"title": "Name","data": "name", "id":"id"},
+                            {"title": "Amount quota","data": "amount_quota"},
+                            {"title": "Amount left","data": "amount_left"},
+                            {"title": "Amount diff ABS","data": null, "render": function(data,type,row) { return (data["amount_left"] - data["amount_quota"])}},
+                            {"title": "Stock %","data": null, "render": function(data,type,row) { return (Math.round(data["amount_left"] / data["amount_quota"]*100))}},
+                            {"title": "Price min","data": "price_min"},
+                            {"title": "Price avg","data": "price_avg"},
+
+                        ]
+                    }
+                );
+
+
+
+            });
+            /*$(document).on("click", function() {
+                console.log($(this).attr)
+            });//*/
+            function handleAjaxError( xhr, textStatus, error ) {
+                if ( textStatus === 'timeout' ) {
+                    alert( 'The server took too long to send the data.' );
+                }
+                else {
+                    if (xhr.status == 401) {
+                        alert( 'Unauthorized: Not logged in or not allowed' );
+                    }
+                    else {
+                        alert(xhr.status+': '+xhr.responseText);
+                    }
+                }
+                var doc = $(document)
+                var table = $('#itemtable')
+                table.fnProcessingIndicator( false );
+            }
+        </script>
+</html>

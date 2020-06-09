@@ -1,4 +1,4 @@
-package net.redirectme.squirrelacademy.character.data;
+package net.redirectme.squirrelacademy.marketobserver.character.data;
 
 import org.openapitools.client.model.GetCharactersCharacterIdOk;
 

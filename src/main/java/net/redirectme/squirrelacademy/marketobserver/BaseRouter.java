@@ -1,8 +1,8 @@
-package net.redirectme.squirrelacademy.MarketObserver;
+package net.redirectme.squirrelacademy.marketobserver;
 
 
-import net.redirectme.squirrelacademy.character.CharacterApi_Functions;
-import net.redirectme.squirrelacademy.character.data.PublicInfo;
+import net.redirectme.squirrelacademy.marketobserver.character.CharacterApi_Functions;
+import net.redirectme.squirrelacademy.marketobserver.character.data.PublicInfo;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.CharacterApi;
 import org.openapitools.client.model.GetCharactersCharacterIdStandings200Ok;
@@ -38,9 +38,11 @@ public class BaseRouter {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired WebClient webClient;
+//    @Autowired
+//    WebClient webClient;
 
-    @Autowired OAuth2RestTemplate restTemplate;
+    @Autowired
+    OAuth2RestTemplate restTemplate;
 
     @Autowired
     OAuth2AuthorizedClientService authorizedClientService;
@@ -77,15 +79,15 @@ public class BaseRouter {
 
                 // Works, WebClient auto-updates tokens
                 String url = "https://esi.evetech.net/latest/characters/91270824/standings";
-                Flux<GetCharactersCharacterIdStandings200Ok> body = webClient
-                //String body = webClient
-                        .get()
-                        .uri(url)
-                        .retrieve()
-                        .bodyToFlux(GetCharactersCharacterIdStandings200Ok.class)
-                        ;
-                List<GetCharactersCharacterIdStandings200Ok> list = body.collectList().block();
-                logger.info(list.toString());
+//                Flux<GetCharactersCharacterIdStandings200Ok> body = webClient
+//                String body = webClient
+//                        .get()
+//                        .uri(url)
+//                        .retrieve()
+//                        .bodyToFlux(GetCharactersCharacterIdStandings200Ok.class)
+//                        ;
+//                List<GetCharactersCharacterIdStandings200Ok> list = body.collectList().block();
+//                logger.info(list.toString());
 
 
 
@@ -95,14 +97,14 @@ public class BaseRouter {
 
                 ApiClient apiClient = new ApiClient();
                 CharacterApi characterApi = new CharacterApi(apiClient);
-                Flux<GetCharactersCharacterIdStandings200Ok> standings = characterApi.getCharactersCharacterIdStandings(
-                        91270824,
-                        "tranquility",
-                        null,
-                        null
-                );
-                List<GetCharactersCharacterIdStandings200Ok> standingslist = standings.collectList().block();
-                logger.info(standingslist.toString());
+//                Flux<GetCharactersCharacterIdStandings200Ok> standings = characterApi.getCharactersCharacterIdStandings(
+//                        91270824,
+//                        "tranquility",
+//                        null,
+//                        null
+//                );
+//                List<GetCharactersCharacterIdStandings200Ok> standingslist = standings.collectList().block();
+//                logger.info(standingslist.toString());
 
 
                 //Resttemplate test, but not intended to be used - webclient prefered

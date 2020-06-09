@@ -1,4 +1,4 @@
-package net.redirectme.squirrelacademy.MarketObserver.oauth2;
+package net.redirectme.squirrelacademy.marketobserver.oauth2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcOperations;

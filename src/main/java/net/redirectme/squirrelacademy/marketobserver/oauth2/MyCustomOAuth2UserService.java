@@ -1,9 +1,8 @@
-package net.redirectme.squirrelacademy.MarketObserver.oauth2;
+package net.redirectme.squirrelacademy.marketobserver.oauth2;
 
 
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -19,17 +18,11 @@ import java.util.*;
  * Used to limit Access to allowed alliance/corporation only
  *
  */
-
-
 @Service
-@PropertySource("classpath:eveesi.properties")
 public class MyCustomOAuth2UserService extends DefaultOAuth2UserService {
-
 
     //@Autowired
     //CharacterApi_Functions characterApi_functions;
-
-
 
     @Value("${allowed_corporations}")
     String allowed_corporations; // ="tranquility";

@@ -1,6 +1,7 @@
-package net.redirectme.squirrelacademy.MarketObserver.oauth2;
+package net.redirectme.squirrelacademy.marketobserver.config;
 
 
+import net.redirectme.squirrelacademy.marketobserver.oauth2.MyCustomOAuth2UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

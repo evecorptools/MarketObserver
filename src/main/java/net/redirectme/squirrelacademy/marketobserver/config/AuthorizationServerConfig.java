@@ -1,4 +1,4 @@
-package net.redirectme.squirrelacademy.MarketObserver.oauth2;
+package net.redirectme.squirrelacademy.marketobserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 
 import javax.sql.DataSource;
 
-public class AuthrorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     DataSource dataSource;
     public void configure(ClientDetailsServiceConfigurer clients) {

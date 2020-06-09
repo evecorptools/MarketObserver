@@ -25,7 +25,7 @@ Nice to have:
 - refactor to JWT?
 
 
-**Poke me ingame if you want to participate for collaboration rights and/or database credentials**
+**Poke me ingame or via slack if you want to participate for collaboration rights and/or database credentials**
 
 
 ressources: 

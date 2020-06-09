@@ -23,7 +23,7 @@ Nice to have:
 - refactor to JWT?
 
 
-Poke me ingame if you want collaboration rights or database credentials
+**Poke me ingame if you want to participate for collaboration rights and/or database credentials**
 
 
 ressources: 

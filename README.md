@@ -2,6 +2,8 @@
 Collection of usful tools for eve online
 
 (!) The initial commit is NOT what is currently in production
+it is only for solving the urgent issues.
+if it is working correctly, the soruce code will be updated with functionality as well
 
 General Idea:
 - Wrap a login/logout button to the marketobserver to enable further personalized features (like mining ledger, assign alts to mains, ...)

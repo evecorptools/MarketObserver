@@ -32,3 +32,10 @@ ressources:
 - Resources: https://esi.evetech.net/ui/
 - Create client credentials: https://developers.eveonline.com/
 - swagger/openApi-infos: https://esi.evetech.net/latest/swagger.json
+
+
+The code should run with a working login/logout and locahost:5000/test shows some possibilities.
+What you need to do to make it run:
+- Rename the 3 config files in /resources (remove "_nokeys")
+- Add database credentials to "application.properties" (if you do not have some, contact me)
+- Add Client secret and Id from the CCP dev site

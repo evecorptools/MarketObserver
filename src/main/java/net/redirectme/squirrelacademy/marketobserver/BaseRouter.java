@@ -9,6 +9,7 @@ import org.openapitools.client.model.GetCharactersCharacterIdStandings200Ok;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +34,6 @@ import java.security.Principal;
 import java.util.*;
 
 @RestController
-@EnableOAuth2Client
 public class BaseRouter {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -41,26 +41,21 @@ public class BaseRouter {
 //    @Autowired
 //    WebClient webClient;
 
-    @Autowired
-    OAuth2RestTemplate restTemplate;
+//    @Autowired
+//    OAuth2RestTemplate restTemplate;
+
+//    @Autowired
+//    OAuth2AuthorizedClientService authorizedClientService;
+
+//    @Autowired
+//    CharacterApi_Functions characterApi_functions;
 
     @Autowired
-    OAuth2AuthorizedClientService authorizedClientService;
-
-    @Autowired
-    CharacterApi_Functions characterApi_functions;
-
-    //@Autowired ApiClient apiClient;
+    ApiClient apiClient;
     //@Autowired CharacterApi characterApi;
 
     @RestController
     public class MainController {
-
-        @Bean
-        protected OAuth2ProtectedResourceDetails eve()
-        {
-            return new AuthorizationCodeResourceDetails();
-        }
 
         @RequestMapping(value = "/test", produces = "application/json")
         @ResponseBody
@@ -74,11 +69,11 @@ public class BaseRouter {
 
 
                 //Works, no AccessToken necessary
-                PublicInfo info = characterApi_functions.getPublicInfoCached(id);
+//                PublicInfo info = characterApi_functions.getPublicInfoCached(id);
 
 
                 // Works, WebClient auto-updates tokens
-                String url = "https://esi.evetech.net/latest/characters/91270824/standings";
+//                String url = "https://esi.evetech.net/latest/characters/91270824/standings";
 //                Flux<GetCharactersCharacterIdStandings200Ok> body = webClient
 //                String body = webClient
 //                        .get()
@@ -95,8 +90,8 @@ public class BaseRouter {
                 // TODO: Does not work. Question: How to set the generated Api to use won Webclient, which uses already existing tokens from login
                 // TODO: Use Autowire? But how :)
 
-                ApiClient apiClient = new ApiClient();
-                CharacterApi characterApi = new CharacterApi(apiClient);
+//                ApiClient apiClient = new ApiClient();
+//                CharacterApi characterApi = new CharacterApi(apiClient);
 //                Flux<GetCharactersCharacterIdStandings200Ok> standings = characterApi.getCharactersCharacterIdStandings(
 //                        91270824,
 //                        "tranquility",
@@ -108,7 +103,7 @@ public class BaseRouter {
 
 
                 //Resttemplate test, but not intended to be used - webclient prefered
-                OAuth2AccessToken newtoken = restTemplate.getAccessToken();
+//                OAuth2AccessToken newtoken = restTemplate.getAccessToken();
 
 
             }catch (Exception e) {
@@ -116,24 +111,22 @@ public class BaseRouter {
             }
 
 
-
-
             //return something to browser
-            List<Object> returnlist = new ArrayList<>();
+//            List<Object> returnlist = new ArrayList<>();
+//
+//            OAuth2AuthorizedClient client = authorizedClientService
+//                    .loadAuthorizedClient(
+//                            authentication.getAuthorizedClientRegistrationId(),
+//                            authentication.getName());
+//            client.getAccessToken();
 
-            OAuth2AuthorizedClient client = authorizedClientService
-                    .loadAuthorizedClient(
-                            authentication.getAuthorizedClientRegistrationId(),
-                            authentication.getName());
-            client.getAccessToken();
-
-            returnlist.add(client.getPrincipalName());
-            returnlist.add(client.getAccessToken());
-            returnlist.add(authentication.getPrincipal().getAttribute("CharacterID"));
-            returnlist.add(authentication.getPrincipal().getAttributes());
+//            returnlist.add(client.getPrincipalName());
+//            returnlist.add(client.getAccessToken());
+//            returnlist.add(authentication.getPrincipal().getAttribute("CharacterID"));
+//            returnlist.add(authentication.getPrincipal().getAttributes());
 
 
-            return returnlist;
+            return null;
         }
 
 

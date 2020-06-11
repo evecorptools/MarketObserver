@@ -1,4 +1,4 @@
-package net.redirectme.squirrelacademy.marketobserver.character.data;
+package net.redirectme.squirrelacademy.marketobserver.entities;
 
 import org.openapitools.client.model.GetCharactersCharacterIdOk;
 
@@ -12,10 +12,10 @@ import java.time.OffsetDateTime;
 @Table(name="character_publicinfo")
 public class PublicInfo {
     @Id
-    int characterid;
+    long characterid;
     @Column(nullable = true)
     Integer allianceid;
-    int ancestryid;
+    Integer ancestryid;
     OffsetDateTime birthday;
     int bloodlineid;
     int corporationid;
@@ -64,7 +64,7 @@ public class PublicInfo {
         this.title = title;
     }
 
-    public int getCharacterid() {
+    public long getCharacterid() {
         return characterid;
     }
 
@@ -80,11 +80,11 @@ public class PublicInfo {
         this.allianceid = allianceid;
     }
 
-    public int getAncestryid() {
+    public Integer getAncestryid() {
         return ancestryid;
     }
 
-    public void setAncestryid(int ancestryid) {
+    public void setAncestryid(Integer ancestryid) {
         this.ancestryid = ancestryid;
     }
 
@@ -120,11 +120,11 @@ public class PublicInfo {
         this.description = description;
     }
 
-    public int getFactionid() {
+    public Integer getFactionid() {
         return factionid;
     }
 
-    public void setFactionid(int factionid) {
+    public void setFactionid(Integer factionid) {
         this.factionid = factionid;
     }
 

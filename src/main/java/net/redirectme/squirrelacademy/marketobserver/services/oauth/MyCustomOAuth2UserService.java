@@ -1,7 +1,9 @@
-package net.redirectme.squirrelacademy.marketobserver.oauth2;
+package net.redirectme.squirrelacademy.marketobserver.services.oauth;
 
 
 
+import org.openapitools.client.ApiClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -26,6 +28,8 @@ public class MyCustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Value("${allowed_corporations}")
     String allowed_corporations; // ="tranquility";
+    @Autowired
+    ApiClient apiClient;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -35,7 +39,7 @@ public class MyCustomOAuth2UserService extends DefaultOAuth2UserService {
 
 
         userRequest.getClientRegistration();
-        userRequest.getAccessToken();
+        apiClient.setAccessToken(userRequest.getAccessToken().getTokenValue());
 
         /*
         int charId = user.getAttribute("CharacterID");

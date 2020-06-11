@@ -38,6 +38,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 
 		<!-- Security -->
 		<dependency> <!-- JOSE ist für external auth provider notwendig ? -->

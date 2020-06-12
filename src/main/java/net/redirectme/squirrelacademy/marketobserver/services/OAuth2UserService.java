@@ -1,11 +1,14 @@
-package net.redirectme.squirrelacademy.marketobserver.services.oauth;
+package net.redirectme.squirrelacademy.marketobserver.services;
 
 
 
+import net.redirectme.squirrelacademy.marketobserver.entities.PublicInfo;
+import net.redirectme.squirrelacademy.marketobserver.services.CharacterService;
 import org.openapitools.client.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -21,15 +24,12 @@ import java.util.*;
  *
  */
 @Service
-public class MyCustomOAuth2UserService extends DefaultOAuth2UserService {
-
-    //@Autowired
-    //CharacterApi_Functions characterApi_functions;
+public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Value("${allowed_corporations}")
     String allowed_corporations; // ="tranquility";
     @Autowired
-    ApiClient apiClient;
+    CharacterService noAuthcharacterApi;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -37,29 +37,14 @@ public class MyCustomOAuth2UserService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = user.getAttributes();
         Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
 
-
-        userRequest.getClientRegistration();
-        apiClient.setAccessToken(userRequest.getAccessToken().getTokenValue());
-
-        /*
         int charId = user.getAttribute("CharacterID");
-        try {
-            PublicInfo publicInfo = characterApi_functions.getPublicInfoCached(charId);
-            //user.getAttributes().put("CorporationID", publicInfo.getCorporationid());
-            //attributes.put("CorporationID", publicInfo.getCorporationid());
-            //attributes.put("AllianceID", publicInfo.getAllianceid());
-            for (String corp : allowed_corporations.split(",")) {
-                if (publicInfo.getCorporationid() == Integer.valueOf(corp)) {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_ALLOWED"));
-                }
+        Integer corpId = noAuthcharacterApi.getCurrentCorpId(charId);
+        for (String corp : allowed_corporations.split(",")) {
+            if (corpId.equals(Integer.valueOf(corp))) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ALLOWED"));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-*/
         //authorities.add(new OAuth2UserAuthority("ROLE_ADMIN"));
-
         return new DefaultOAuth2User(authorities, attributes, "CharacterName");
     }
 

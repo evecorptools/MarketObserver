@@ -1,4 +1,4 @@
-package net.redirectme.squirrelacademy.marketobserver.config;
+package net.redirectme.squirrelacademy.marketobserver.configs;
 
 
 import org.slf4j.Logger;

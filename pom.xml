@@ -225,7 +225,7 @@
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<dateLibrary>java8</dateLibrary>
 							</configOptions>
-							<library>jersey2</library>
+							<library>webclient</library>
 							<generateApiTests>false</generateApiTests>
 							<generateModelTests>false</generateModelTests>
 						</configuration>
@@ -234,6 +234,9 @@
 			</plugin>
 		</plugins>
 		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
 			<resource>
 				<directory>${project.build.directory}/generated-sources/esi/src/gen/java/main</directory>
 			</resource>

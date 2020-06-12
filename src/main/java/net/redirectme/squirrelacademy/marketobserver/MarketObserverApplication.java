@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "net.redirectme.squirrelacademy")
+@EnableJpaRepositories(basePackages = "net.redirectme.squirrelacademy.marketobserver")
 public class MarketObserverApplication {
 
 	public static void main(String[] args) {

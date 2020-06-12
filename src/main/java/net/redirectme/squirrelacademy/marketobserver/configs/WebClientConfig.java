@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 package net.redirectme.squirrelacademy.marketobserver.configs;
-=======
-package net.redirectme.squirrelacademy.marketobserver.config;
->>>>>>> client-gen
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,10 +34,6 @@ public class WebClientConfig {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(auth2AuthorizedClientManager);
         oauth2Client.setDefaultClientRegistrationId("evesso");
-<<<<<<< HEAD
-=======
-
->>>>>>> client-gen
         return WebClient.builder()
                 .apply(oauth2Client.oauth2Configuration())
                 .build();

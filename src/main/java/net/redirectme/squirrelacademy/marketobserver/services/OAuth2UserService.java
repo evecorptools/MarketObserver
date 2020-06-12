@@ -1,10 +1,5 @@
 package net.redirectme.squirrelacademy.marketobserver.services;
 
-
-
-import net.redirectme.squirrelacademy.marketobserver.entities.PublicInfo;
-import net.redirectme.squirrelacademy.marketobserver.services.CharacterService;
-import org.openapitools.client.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +11,9 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /***
  *

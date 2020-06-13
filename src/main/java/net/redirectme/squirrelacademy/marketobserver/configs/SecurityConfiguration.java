@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 
 @Configuration
@@ -21,8 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-//                .rememberMe().rememberMeServices(rememberMeServices())
-//                .and()
+                .rememberMe().rememberMeServices(rememberMeServices())
+                .and()
                 .authorizeRequests(a -> a
                         .antMatchers("/", "/error", "/webjars/**").permitAll()
                         .anyRequest().authenticated()
@@ -51,20 +52,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
-//    @Bean
-//    SpringSessionRememberMeServices rememberMeServices() {
-//        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
-//        rememberMeServices.setAlwaysRemember(true);
-//
-//        return rememberMeServices;
-//    }
+    SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        rememberMeServices.setAlwaysRemember(true);
 
-//    @Bean
-//    OAuth2RestTemplate restTemplate (OAuth2ProtectedResourceDetails oauth2RemoteResource) {
-//        OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(oauth2RemoteResource, oauth2ClientContext);
-//        oAuth2RestTemplate.getAccessToken();
-//        return oAuth2RestTemplate;
-//    }
-
+        return rememberMeServices;
+    }
 
 }

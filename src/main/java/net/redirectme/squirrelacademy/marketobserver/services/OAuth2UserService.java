@@ -1,6 +1,7 @@
 package net.redirectme.squirrelacademy.marketobserver.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +25,9 @@ import java.util.Set;
 public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Value("${allowed_corporations}")
-    String allowed_corporations; // ="tranquility";
+    String allowed_corporations;
     @Autowired
-    CharacterService noAuthcharacterApi;
+    CharacterService characterService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -35,7 +36,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
 
         int charId = user.getAttribute("CharacterID");
-        Integer corpId = noAuthcharacterApi.getCurrentCorpId(charId);
+        Integer corpId = characterService.getCurrentCorpId(charId);
         for (String corp : allowed_corporations.split(",")) {
             if (corpId.equals(Integer.valueOf(corp))) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_ALLOWED"));

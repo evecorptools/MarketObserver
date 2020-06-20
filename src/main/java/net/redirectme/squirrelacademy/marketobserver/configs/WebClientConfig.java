@@ -33,7 +33,6 @@ public class WebClientConfig {
     public WebClient webClient(OAuth2AuthorizedClientManager auth2AuthorizedClientManager) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(auth2AuthorizedClientManager);
-        oauth2Client.setDefaultClientRegistrationId("evesso");
         return WebClient.builder()
                 .apply(oauth2Client.oauth2Configuration())
                 .build();

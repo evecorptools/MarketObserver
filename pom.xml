@@ -15,7 +15,7 @@
 	<description>ShowsMarketInfos for the Corp</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<spring-security.version>5.3.2.RELEASE</spring-security.version>
 		<spring.version>2.2.2.RELEASE</spring.version>
 		<!--spring-web-version>5.0.16.RELEASE</spring-web-version-->

@@ -54,7 +54,7 @@ public class CoreClient {
             builder.queryParams(queryParams);
         }
         final WebClient.RequestBodySpec requestBuilder = webClient
-                .method(method).uri(builder.build(false).toUriString(),pathParams);
+                .method(method).uri(builder.build(false).toUriString(), pathParams);
         requestBuilder.accept(MediaType.APPLICATION_JSON);
         requestBuilder.contentType(MediaType.APPLICATION_JSON);
         requestBuilder.header("User-Agent", userAgent);

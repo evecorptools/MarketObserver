@@ -1,6 +1,7 @@
 package net.redirectme.squirrelacademy.marketobserver.clients;
 
 import org.openapitools.client.model.GetCharactersCharacterIdCorporationhistory200Ok;
+import org.openapitools.client.model.GetCharactersCharacterIdOk;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -19,25 +20,32 @@ import java.util.Map;
 public class CharacterClient {
     @Value("${esidatasource}")
     private String esiDataSource;
-    private final CoreClient esidatasource;
-    public CharacterClient(CoreClient esidatasource) {
-        this.esidatasource = esidatasource;
+    private final CoreClient coreClient;
+    public CharacterClient(CoreClient coreClient) {
+        this.coreClient = coreClient;
     }
 
     public ResponseEntity<List<GetCharactersCharacterIdCorporationhistory200Ok>> getCharactersCharacterIdCorporationhistory(
             Integer characterId, String ifNoneMatch) throws RestClientException {
         Map<String, Object> pathParams = Map.of("character_id", characterId);
-
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        final HttpHeaders headerParams = new HttpHeaders();
-        queryParams.put("datasource", Collections.singletonList(esiDataSource));
-
-        if (ifNoneMatch != null) {
-            headerParams.add("If-None-Match", "" + ifNoneMatch);
-        }
-        return esidatasource.performList(
-                "/v1/characters/{character_id}/corporationhistory/", HttpMethod.GET, pathParams, queryParams, null,
+//        if (ifNoneMatch != null) {
+//            headerParams.add("If-None-Match", "" + ifNoneMatch);
+//        }
+        return coreClient.performList(
+                "/v1/characters/{character_id}/corporationhistory/", HttpMethod.GET, pathParams, defaultQueryParams(esiDataSource), null,
                 new ParameterizedTypeReference<GetCharactersCharacterIdCorporationhistory200Ok>() {}, false);
+    }
+
+    public ResponseEntity<GetCharactersCharacterIdOk> getCharactersCharacterId(Integer characterId, String ifNoneMatch) throws RestClientException {
+        Map<String, Object> pathParams = Map.of("character_id", characterId);
+        return coreClient.perform("/v4/characters/{character_id}/", HttpMethod.GET, pathParams,
+                defaultQueryParams(esiDataSource), null, GetCharactersCharacterIdOk.class, true);
+    }
+
+    private static MultiValueMap<String, String> defaultQueryParams(String datasource) {
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.put("datasource", Collections.singletonList(datasource));
+        return queryParams;
     }
 
 }

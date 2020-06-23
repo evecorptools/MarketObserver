@@ -30,25 +30,34 @@ public class CoreClient {
         this.basePath = basePath;
     }
 
-    public <T> ResponseEntity<T> perform(String path, HttpMethod method, Map<String, Object> pathParams,
-                                      MultiValueMap<String, String> queryParams, T body, Class<T> clazz, boolean authorized) {
-        return prepareRequest(path, method, pathParams, queryParams, body, authorized)
+    public <T> ResponseEntity<T> perform(String path, HttpMethod method,
+                                         Map<String, Object> pathParams,
+                                         Map<String, String> headersParams,
+                                         MultiValueMap<String, String> queryParams,
+                                         T body, Class<T> clazz, boolean authorized) {
+        return prepareRequest(path, method, pathParams, headersParams, queryParams, body, authorized)
                 .retrieve()
                 .toEntity(clazz)
                 .block();
     }
 
-    public <T> ResponseEntity<List<T>> performList(String path, HttpMethod method, Map<String, Object> pathParams,
-                                                   MultiValueMap<String, String> queryParams, Object body,
+    public <T> ResponseEntity<List<T>> performList(String path, HttpMethod method,
+                                                   Map<String, Object> pathParams,
+                                                   Map<String, String> headersParams,
+                                                   MultiValueMap<String, String> queryParams,
+                                                   Object body,
                                                    ParameterizedTypeReference<T> elementTypeRef, boolean authorized) {
-        return prepareRequest(path, method, pathParams, queryParams, body, authorized)
+        return prepareRequest(path, method, pathParams, headersParams, queryParams, body, authorized)
                 .retrieve()
                 .toEntityList(elementTypeRef)
                 .block();
     }
 
-    private WebClient.RequestBodySpec prepareRequest(String path, HttpMethod method, Map<String, Object> pathParams,
-                                                     MultiValueMap<String, String> queryParams, Object body, boolean authorized) {
+    private WebClient.RequestBodySpec prepareRequest(String path, HttpMethod method,
+                                                     Map<String, Object> pathParams,
+                                                     Map<String, String> headersParams,
+                                                     MultiValueMap<String, String> queryParams,
+                                                     Object body, boolean authorized) {
         final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(basePath).path(path);
         if (queryParams != null) {
             builder.queryParams(queryParams);
@@ -58,6 +67,9 @@ public class CoreClient {
         requestBuilder.accept(MediaType.APPLICATION_JSON);
         requestBuilder.contentType(MediaType.APPLICATION_JSON);
         requestBuilder.header("User-Agent", userAgent);
+        if (headersParams != null) {
+            headersParams.forEach(requestBuilder::header);
+        }
         if (body != null) {
             requestBuilder.body(BodyInserters.fromValue(body));
         }

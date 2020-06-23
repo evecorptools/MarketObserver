@@ -28,17 +28,22 @@ public class CharacterClient {
     public ResponseEntity<List<GetCharactersCharacterIdCorporationhistory200Ok>> getCharactersCharacterIdCorporationhistory(
             Integer characterId, String ifNoneMatch) throws RestClientException {
         Map<String, Object> pathParams = Map.of("character_id", characterId);
-//        if (ifNoneMatch != null) {
-//            headerParams.add("If-None-Match", "" + ifNoneMatch);
-//        }
+        Map<String, String> headerParams = null;
+        if (ifNoneMatch != null) {
+            headerParams = Collections.singletonMap("If-None-Match", ifNoneMatch);
+        }
         return coreClient.performList(
-                "/v1/characters/{character_id}/corporationhistory/", HttpMethod.GET, pathParams, defaultQueryParams(esiDataSource), null,
+                "/v1/characters/{character_id}/corporationhistory/", HttpMethod.GET, pathParams, headerParams, defaultQueryParams(esiDataSource), null,
                 new ParameterizedTypeReference<GetCharactersCharacterIdCorporationhistory200Ok>() {}, false);
     }
 
     public ResponseEntity<GetCharactersCharacterIdOk> getCharactersCharacterId(Integer characterId, String ifNoneMatch) throws RestClientException {
         Map<String, Object> pathParams = Map.of("character_id", characterId);
-        return coreClient.perform("/v4/characters/{character_id}/", HttpMethod.GET, pathParams,
+        Map<String, String> headerParams = null;
+        if (ifNoneMatch != null) {
+            headerParams = Collections.singletonMap("If-None-Match", ifNoneMatch);
+        }
+        return coreClient.perform("/v4/characters/{character_id}/", HttpMethod.GET, pathParams, headerParams,
                 defaultQueryParams(esiDataSource), null, GetCharactersCharacterIdOk.class, true);
     }
 

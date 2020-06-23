@@ -28,17 +28,15 @@ public class MarketClient {
     public ResponseEntity<List<GetMarketsStructuresStructureId200Ok>> getMarketsStructuresStructureId(
             Long structureId, String ifNoneMatch, Integer page) throws RestClientException {
         Map<String, Object> pathParams = Map.of("structure_id", structureId);
-
+        Map<String, String> headerParams = null;
+        if (ifNoneMatch != null) {
+            headerParams = Collections.singletonMap("If-None-Match", ifNoneMatch);
+        }
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        final HttpHeaders headerParams = new HttpHeaders();
         queryParams.put("datasource", Collections.singletonList(esiDataSource));
         queryParams.put("page", Collections.singletonList(""+page));
-
-        if (ifNoneMatch != null) {
-            headerParams.add("If-None-Match", "" + ifNoneMatch);
-        }
         return esidatasource.performList(
-                "/v1/markets/structures/{structure_id}/", HttpMethod.GET, pathParams, queryParams, null,
+                "/v1/markets/structures/{structure_id}/", HttpMethod.GET, pathParams, headerParams, queryParams, null,
                 new ParameterizedTypeReference<GetMarketsStructuresStructureId200Ok>() {}, true);
     }
 }

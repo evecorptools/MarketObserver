@@ -3,12 +3,10 @@ package net.redirectme.squirrelacademy.marketobserver.configs;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.openapitools.client.ApiClient;
+import net.redirectme.squirrelacademy.marketobserver.clients.CoreClient;
 import org.openapitools.client.RFC3339DateFormat;
-import org.openapitools.client.api.CharacterApi;
-import org.openapitools.client.api.MarketApi;
 import org.openapitools.jackson.nullable.JsonNullableModule;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,31 +36,10 @@ public class ApiConfig {
     }
 
     @Bean
-    ApiClient apiClient(WebClient webClient, ObjectMapper objectMapper, DateFormat esiDateFormat) {
-        return new ApiClient(webClient, objectMapper, esiDateFormat);
+    CoreClient coreClient(WebClient webClient, ObjectMapper objectMapper, DateFormat esiDateFormat,
+                          @Value("${marketobserver.useragent}") String userAgent,
+                          @Value("${marketobserver.esibasepath}") String basePath) {
+        return new CoreClient(webClient, objectMapper, esiDateFormat, userAgent, basePath);
     }
 
-    @Bean
-    CharacterApi characterApi(ApiClient apiClient) {
-        return new CharacterApi(apiClient);
-    }
-
-    @Bean
-    MarketApi marketApi(ApiClient apiClient) {
-        return new MarketApi(apiClient);
-    }
-
-    // It seems it is not possible to call "public" apis since the client will complain about missing authorization
-    // So use this work around where we create a client without auth settings.
-    @Bean
-    @Qualifier("noAuth")
-    ApiClient noAuthApiClient() {
-        return new ApiClient();
-    }
-
-    @Bean
-    @Qualifier("noAuth")
-    CharacterApi noAuthcharacterApi(@Qualifier("noAuth") ApiClient noAuthApiClient) {
-        return new CharacterApi(noAuthApiClient);
-    }
 }

@@ -96,6 +96,12 @@
         $("#user").html(data.name);
         $(".unauthenticated").hide()
         $(".authenticated").show()
+
+        $.get("/test", function(data) {
+            if (data) {
+                console.log(data);
+            }
+        });
     });
 </script>
     <script type="text/javascript">
@@ -116,6 +122,8 @@
         $(".error").html('');
     }
 });
+
+
 </script>
 <script type="text/javascript">
 $.ajaxSetup({

@@ -26,8 +26,10 @@ public class MainController {
 
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
-    public List<GetMarketsStructuresStructureId200Ok> getList(OAuth2AuthenticationToken authentication) {
-        return marketService.getData(1027847403762l);
+    //public List<GetMarketsStructuresStructureId200Ok> getList(OAuth2AuthenticationToken authentication) {
+    public List<GetMarketsStructuresStructureId200Ok> getList(@AuthenticationPrincipal OAuth2User principal) {
+        int characterid = principal.getAttribute("CharacterID");
+        return marketService.getData(1027847403762l, characterid);
     }
 
     @GetMapping("/user")

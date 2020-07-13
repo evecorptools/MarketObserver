@@ -62,7 +62,7 @@ public class MarketService {
         orderlist.forEach(o -> resultlist.add(new MarketOrder(o, location_id, character_id)));
         logger.info("Start insert\t"+character_id);
         //orderlist.forEach(o -> resultlist.add(marketOrdersRepository.save(new MarketOrder(o, location_id, character_id))));
-        //marketOrdersRepository.saveAll(resultlist);
+        marketOrdersRepository.saveAll(resultlist);
         logger.info("End insert\t"+character_id);
     }
 

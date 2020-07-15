@@ -1,12 +1,12 @@
 package net.redirectme.squirrelacademy.marketobserver.controllers;
 
+import net.redirectme.squirrelacademy.marketobserver.entities.TableModel;
 import net.redirectme.squirrelacademy.marketobserver.services.MarketService;
 import org.openapitools.client.model.GetMarketsStructuresStructureId200Ok;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +25,20 @@ public class MainController {
     @Autowired
     MarketService marketService;
 
-    @RequestMapping(value = "/test", produces = "application/json")
+    @RequestMapping(value = "/test2", produces = "application/json")
     @ResponseBody
     //public List<GetMarketsStructuresStructureId200Ok> getList(OAuth2AuthenticationToken authentication) {
     public List<GetMarketsStructuresStructureId200Ok> getList(@AuthenticationPrincipal OAuth2User principal) {
         int characterid = principal.getAttribute("CharacterID");
         return marketService.getData(1027847403762l, characterid);
+    }
+    @RequestMapping(value = "/test3", produces = "application/json")
+    @ResponseBody
+    //public List<GetMarketsStructuresStructureId200Ok> getList(OAuth2AuthenticationToken authentication) {
+    public Collection<TableModel> getData(@AuthenticationPrincipal OAuth2User principal) {
+        int characterid = principal.getAttribute("CharacterID");
+        return marketService.getRequestedItemsWithOrdes(1027847403762l, characterid);
+        //return marketService.getData(1027847403762l, characterid);
     }
 
     @GetMapping("/user")

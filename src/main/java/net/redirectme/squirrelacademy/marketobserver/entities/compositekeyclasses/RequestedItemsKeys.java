@@ -2,8 +2,8 @@ package net.redirectme.squirrelacademy.marketobserver.entities.compositekeyclass
 
 import java.io.Serializable;
 
-public class MarketOrderKeys implements Serializable {
-    private long order_id;
-    int characterID;
+public class RequestedItemsKeys implements Serializable {
+    private int type_id;
+    int character_id_insert;
 
 }

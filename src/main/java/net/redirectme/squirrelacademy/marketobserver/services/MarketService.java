@@ -2,7 +2,9 @@ package net.redirectme.squirrelacademy.marketobserver.services;
 
 import net.redirectme.squirrelacademy.marketobserver.clients.MarketClient;
 import net.redirectme.squirrelacademy.marketobserver.entities.MarketOrder;
+import net.redirectme.squirrelacademy.marketobserver.entities.TableModel;
 import net.redirectme.squirrelacademy.marketobserver.repositories.MarketOrdersRepository;
+import net.redirectme.squirrelacademy.marketobserver.repositories.RequestedItemsRepository;
 import org.openapitools.client.model.GetMarketsStructuresStructureId200Ok;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -21,6 +24,9 @@ public class MarketService {
 
     @Autowired
     MarketOrdersRepository marketOrdersRepository;
+
+    @Autowired
+    RequestedItemsRepository requestedItemsRepository;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -65,6 +71,12 @@ public class MarketService {
         marketOrdersRepository.saveAll(resultlist);
         logger.info("End insert\t"+character_id);
     }
+
+    public Collection<TableModel> getRequestedItemsWithOrdes(long location_id, int character_id) {
+        logger.info("Start getting combined data");
+        return requestedItemsRepository.findByRequestlocationAndCharacterID(location_id, character_id);
+    }
+
 
 
 

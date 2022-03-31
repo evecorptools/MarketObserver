@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-security.version>5.3.3.RELEASE</spring-security.version>
-		<spring.version>2.2.2.RELEASE</spring.version>
+		<spring.version>2.5.12</spring.version>
 		<!--spring-web-version>5.0.16.RELEASE</spring-web-version-->
 		<spring-web-version>5.3.2.RELEASE</spring-web-version>
 		<junit-version>4.13</junit-version>
